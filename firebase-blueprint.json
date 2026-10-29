@@ -1,0 +1,156 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile data and Maharah Kitabah learning progress",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Student display name"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["pelajar", "guru", "admin"],
+          "description": "User role in the learning system"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar URL or avatar key"
+        },
+        "totalWritings": {
+          "type": "number",
+          "description": "Total writing exercises submitted"
+        },
+        "totalScore": {
+          "type": "number",
+          "description": "Accumulated learning points"
+        },
+        "streakDays": {
+          "type": "number",
+          "description": "Consecutive days practiced"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "displayName", "role"]
+    },
+    "WritingSubmission": {
+      "title": "WritingSubmission",
+      "description": "Arabic writing submission by student with evaluation and AI feedback",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner student UID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or topic of the writing",
+          "maxLength": 200
+        },
+        "category": {
+          "type": "string",
+          "enum": ["insha_hurr", "insha_muwajjah", "imla", "tarkib", "khat"],
+          "description": "Exercise category in Maharah Kitabah"
+        },
+        "arabicText": {
+          "type": "string",
+          "description": "Written Arabic text submitted by student",
+          "maxLength": 5000
+        },
+        "translation": {
+          "type": "string",
+          "description": "Indonesian meaning or student notes",
+          "maxLength": 2000
+        },
+        "score": {
+          "type": "number",
+          "description": "Kitabah score from 0 to 100"
+        },
+        "feedback": {
+          "type": "object",
+          "description": "Detailed AI pedagogical feedback on Nahwu, Sharaf, and Imla"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Submission ISO date"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update ISO date"
+        }
+      },
+      "required": ["userId", "title", "category", "arabicText"]
+    },
+    "PracticeProgress": {
+      "title": "PracticeProgress",
+      "description": "Progress tracking for interactive drills (arranging words, filling blanks, dictation)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique progress ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner student UID"
+        },
+        "drillType": {
+          "type": "string",
+          "enum": ["tarkib", "imla_faragh", "dikte", "khat_tracing"],
+          "description": "Type of interactive drill"
+        },
+        "drillId": {
+          "type": "string",
+          "description": "ID of the exercise item"
+        },
+        "isCompleted": {
+          "type": "boolean",
+          "description": "Completion flag"
+        },
+        "score": {
+          "type": "number",
+          "description": "Drill score"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp"
+        }
+      },
+      "required": ["userId", "drillType", "drillId", "isCompleted"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "UserProfile" },
+      "description": "Stores user profile and learning statistics"
+    },
+    "/writings/{writingId}": {
+      "schema": { "$ref": "WritingSubmission" },
+      "description": "Stores student Arabic writing compositions, essays, and AI corrections"
+    },
+    "/practice_progress/{progressId}": {
+      "schema": { "$ref": "PracticeProgress" },
+      "description": "Stores student drill progress and completion badges"
+    }
+  }
+}

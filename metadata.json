@@ -1,0 +1,6 @@
+{
+  "name": "Al-Qalam: Studio Pembelajaran Maharah Kitabah",
+  "description": "Aplikasi pembelajaran Maharah Kitabah (keterampilan menulis bahasa Arab) interaktif dengan latihan insya', imla', keyboard harakat virtual, kanvas kaligrafi huruf, evaluasi cerdas bertenaga Gemini AI, dan integrasi Firebase Firestore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
